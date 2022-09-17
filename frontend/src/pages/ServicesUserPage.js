@@ -77,7 +77,7 @@ const ServicesUserPage = () => {
                     ) : (
                         <Link 
                         to='/add-service'
-                        state= {{ info: info}}
+                        state= {{ info: info }}
                         >
                             Add Service
                         </Link>

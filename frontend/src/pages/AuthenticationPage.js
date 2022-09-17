@@ -3,7 +3,7 @@ import { Container, Box, Text, Tabs, Tab, TabList, TabPanels, TabPanel } from '@
 import Login from '../components/authentication/Login'
 import SignUp from '../components/authentication/SignUp'
 
-const AuthenticationPage = () => {
+const AuthenticationPage = (props) => {
   return (
     <Container maxW='xl' centerContent>
     <Box
@@ -26,7 +26,7 @@ const AuthenticationPage = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Login />
+            <Login setupSocket={props.setupSocket}/>
           </TabPanel>
           <TabPanel>
           <SignUp />

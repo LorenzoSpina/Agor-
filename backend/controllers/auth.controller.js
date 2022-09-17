@@ -87,9 +87,6 @@ function userPasswordValidation(req,res,user) {
         id: user._id,
         username: user.username,
         plan: user.plan,
-        pic: user.picture,
-        token
-    })
 }
 
 exports.userSignIn = (req,res) => {
