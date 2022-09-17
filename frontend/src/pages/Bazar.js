@@ -40,7 +40,6 @@ const Bazar = () => {
                 <Services services={requiredServices} />
             </div>
         </div>
-       
     </div>
     )
 }
