@@ -22,7 +22,7 @@ const SignUp = () => {
     const [address, setAddress] = React.useState();
 
     const [showPass, setShowPass] = React.useState(false);
-    const [confirmpassword, setConfirmpassword] = React.useState();
+    const [confirmpassword, setConfirmpassword] = React.useState(false);
     const [showConfirmPass, setShowConfirmPass] = React.useState(false);
     const [loading, setLoading] = React.useState(false)
 
@@ -68,10 +68,11 @@ const SignUp = () => {
     const validEmail = new RegExp('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
     const validPassword = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\\[-`{-~]).{6,64}$')
     const validIva = new RegExp('^[A-Z]{2}[0-9]{11}$')
+    const validName = new RegExp('^[a-zA-Z\\d]+$')
 
     const submitUser = async () => {
       setLoading(true)
-      const data = await axios.get('/list-users')
+      const data = await axios.get('/all-users')
       const users = data.data
       const usernames = users.map(item => item.username)
       const emails = users.map(item => item.email)
@@ -93,6 +94,19 @@ const SignUp = () => {
           duration: 5000,
           isClosable: true,
           position: "bottom",
+        })
+        setLoading(false)
+        return
+      }
+      const date = new Date().getTime()
+      const birth = new Date(birthDate).getTime()
+      if (birth > date) {
+        toast({
+            title: "Birthdate is not valid",
+            status: "warning",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
         })
         setLoading(false)
         return
@@ -121,7 +135,18 @@ const SignUp = () => {
       }
       if (!validPassword.test(password)) {
         toast({
-          title: "Password format not correct, is required - minimum length 6 characters:\n - at least 1 capital character\n - at least 1 lower character\n - at least 11 number\n - at least 1 special character ",
+          title: "Password format not correct, is required - minimum length 6 characters:\n - at least 1 capital character\n - at least 1 lower character\n - at least 1 number\n - at least 1 special character ",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom"
+        })
+        setLoading(false)
+        return
+      }
+      if (!validName.test(username)) {
+        toast({
+          title: "Username format not correct",
           status: "warning",
           duration: 5000,
           isClosable: true,
@@ -176,7 +201,7 @@ const SignUp = () => {
     
     const submitCorporate = async () => {
       setLoading(true)
-      const data = await axios.get('/list-corporates')
+      const data = await axios.get('/all-users')
       const corporates = data.data
       const names = corporates.map(item => item.name)
       const emails = corporates.map(item => item.email)

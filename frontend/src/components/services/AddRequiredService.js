@@ -13,7 +13,7 @@ const AddRequiredService = (props) => {
     const [dataCreation, setDataCreation] = React.useState()
     const [lastUpdate, setLastUpdate] = React.useState()
     const [user, setUser] = React.useState()
-    const [loading, setLoading] = React.useState()
+    const [loading, setLoading] = React.useState(false)
 
     const toast = useToast()
     const navigate = useNavigate()

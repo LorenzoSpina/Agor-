@@ -72,7 +72,7 @@ const AddOfferedService = (props) => {
                 headers: {
                 "Content-type":"application/json",
                 Authorization: `Bearer ${props.info.token}`
-                },
+                }
             }
             await axios.post(
             "/add-offered-service",

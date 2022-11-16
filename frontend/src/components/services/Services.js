@@ -1,4 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Box } from '@chakra-ui/react'
+import { Image } from '@chakra-ui/react'
+
 
 
 
@@ -9,91 +13,82 @@ const Services = (props) => {
     React.useEffect(() => {
         setPosts(props.services)
     },[props.services])
-//riga sotto service class ci andra l immagine
-    /*const services = posts.map(item => (
-    <div key={item._id} className='service'>
-        <div className='serviceImage'>
-        <div className='box'> 
-            <h2>{item.title}</h2>
-            <p>{item.description}</p>
-            <p>Where: {item.place}</p>
-            {item.price ? 
-            (<p className='servicePrice'>Price: {item.price}€</p>) :
-            (<p>Data required: {item.dataRequired.split('T')[0]}</p>)}
-            <p>Data creation: {item.dataCreation.split('T')[0]}</p>
-            </div>
-        </div>
-    </div>
-    ))  
-    */
-    /*const services = posts.map(item => (
-        <div key={item._id} className='service'>
-            <div className='serviceImage'></div>
-            <div className='box'> 
-                <h2 className='serviceTitle'>{item.title}</h2>
-                <p>Where: {item.place}</p>
-                <p>Data creation: {item.dataCreation.split('T')[0]}</p>
-                <a href=''>READ MORE</a>
-                </div>
-        
-        </div>
-        ))  
-        */
-
-        /*const services = posts.map(item => (
-            <div key={item._id} className='service'>
-                <div className='box'>
-                <div className='serviceImage'></div>
-                
-                    <h2 className='serviceTitle'>{item.title}</h2>
-                    <p>Where: {item.place}</p>
-                    <p>Data creation: {item.dataCreation.split('T')[0]}</p>
-                    <a href=''>READ MORE</a>
-                    </div>
-                    
-            
-            </div>
-            ))  
-            */
-
-    /*const services = posts.map(item => (
-        <div  key={item._id} className='serviceCard' >
-            
-            <div className='box' background-image={item.picture}>
-                
-                <div className='serviceInformations'>
-                    <h2 className='serviceTitle'>{item.title}</h2>
-                    <p>Where: {item.place}</p>
-                    <p>Data creation: {item.dataCreation.split('T')[0]}</p>
-                </div>
-                <a className='linkBox' href=''>READ MORE</a>
-            </div>
-        </div>
-    ))
-    */
-
-
 
 
     const services = posts.map(item => (
-        <div  key={item._id} className='serviceCard'>
-            <img src={item.picture} className='serviceImage'/>
-            <div className='box'>
-                
-                <div className='serviceInformations'>
-                    <h2 className='serviceTitle'>{item.title}</h2>
-                    <p>Where: {item.place}</p>
-                    <p>Data creation: {item.dataCreation.split('T')[0]}</p>
-                </div>
-                <a className='linkBox' href=''>READ MORE</a>
-            </div>
-        </div>
+  
+        <Link
+        to={`/service`}
+        key={item._id}
+        state={{
+            id: item._id,
+            picture: item.picture,
+            title: item.title,
+            description: item.description,
+            place: item.place,
+            price: item.price,
+            dataRequired: item.dataRequired,
+            dataCreation: item.dataCreation,
+            lastUpdate: item.lastUpdate,
+            user: item.user
+        }}>
+          
+    <Box maxW='sm' borderWidth='5px' borderRadius='lg' overflow='hidden' m='15px' minW='166.28'>
+      <Image src={item.picture} alt={item.description} borderWidth='5px' h='299.85'/>
+
+      <Box p='6'>
+        <Box display='flex' alignItems='baseline'>
+          <Box
+            color='gray.500'
+            fontWeight='semibold'
+            letterSpacing='wide'
+            fontSize='xs'
+            textTransform='uppercase'
+            ml='2'
+          >
+          </Box>
+        </Box>
+
+        <Box
+          mt='1'
+          fontWeight='semibold'
+          as='h4'
+          lineHeight='tight'
+          noOfLines={1}
+        >
+          {item.title}
+        </Box>
+
+        <Box>
+        
+
+          <Box as='span' color='gray.600' fontSize='sm'>
+          
+          </Box>
+          <Box>
+          
+          Data creation: {item.dataCreation.split('T')[0]}
+          </Box>
+          
+          <Box>
+
+          </Box>
+
+        </Box>
+            {item.place}
+        </Box>
+        </Box>
+        
+            
+        </Link>
     ))
     
     return (
+    
     <div>
         {services}
     </div>
+    
     )
 }
 

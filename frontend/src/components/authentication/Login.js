@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, FormControl, Input, InputGroup, InputRightElement, VStack, useToast, RadioGroup, Radio, Stack } from '@chakra-ui/react'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Button, FormControl, Input, InputGroup, InputRightElement, VStack, useToast, RadioGroup, Radio, Stack, Checkbox } from '@chakra-ui/react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
@@ -11,18 +11,24 @@ const Login = () => {
   const [username, setUsername] = React.useState()
   const [password, setPassword] = React.useState()
   const [name, setName] = React.useState()
+  const [keepAccess, setKeepAccess] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
 
   const toast = useToast()
   const navigate = useNavigate()
+  const CryptoJS = require('crypto-js')
+
+  const encrypt = (data) => {
+    let encrypted = CryptoJS.AES.encrypt(data, process.env.REACT_APP_SECRET_KEY)
+    encrypted = encrypted.toString()
+    return encrypted
+  }
 
   const handleClick = () => setShow(!show)
 
+  const handleAccess = () => setKeepAccess(!keepAccess)
+
   const submitUser = async () => {
-    const data = await axios.get('/list-users')
-    const users = data.data
-    const usernames = users.map(item => item.username)
-    const emails = users.map(item => item.email)
     if(!username || !password){
       toast({
         title: "Please fill all the fields",
@@ -33,20 +39,6 @@ const Login = () => {
       })
       setLoading(false)
       return
-    }
-    if(!usernames.includes(username)) {
-      if(!emails.includes(username)){
-        toast({
-          title: "Email or username does not belong to an account",
-          description: "Please verify your username or your email and try again",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        })
-        setLoading(false)
-        return
-      }
     }
     try {
       const config = {
@@ -75,8 +67,14 @@ const Login = () => {
         duration: 5000,
         isClosable: true,
         position: "bottom",
-      })  
-      localStorage.setItem('userInfo', JSON.stringify(data))
+      })
+      const value = encrypt(JSON.stringify(data))
+      if (keepAccess) {
+        localStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY,value)
+        sessionStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY,value)
+      } else {
+        sessionStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY,value)
+      }
       setLoading(false)
       navigate('/')
     } catch (error) {
@@ -93,10 +91,6 @@ const Login = () => {
   }
 
   const submitCorporate = async () => {
-    const data = await axios.get('/list-corporates')
-    const corporates = data.data
-    const names = corporates.map(item => item.name)
-    const emails = corporates.map(item => item.email)
     if(!name || !password){
       toast({
         title: "Please fill all the fields",
@@ -107,20 +101,6 @@ const Login = () => {
       })
       setLoading(false)
       return
-    }
-    if(!names.includes(name)) {
-      if(!emails.includes(name)){
-        toast({
-          title: "Email or username does not belong to an account",
-          description: "Please verify your username or your email and try again",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        })
-        setLoading(false)
-        return
-      }
     }
     try {
       const config = {
@@ -149,8 +129,14 @@ const Login = () => {
         duration: 5000,
         isClosable: true,
         position: "bottom",
-      })  
-      localStorage.setItem('userInfo', JSON.stringify(data))
+      })
+      const value = encrypt(JSON.stringify(data))
+      if (keepAccess) {
+        localStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY,value)
+        sessionStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY,value)
+      } else {
+        sessionStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY,value)
+      }
       setLoading(false)
       navigate('/')
     } catch (error) {
@@ -183,6 +169,9 @@ const Login = () => {
           <Stack direction='row'>
             <Radio value='1'>User</Radio>
             <Radio value='2'>Corporate</Radio>
+            <Checkbox
+            onChange={handleAccess}
+            >Keep access</Checkbox>
           </Stack>
         </RadioGroup>
       </FormControl>
