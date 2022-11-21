@@ -1,9 +1,25 @@
 const User = require('../models/user.model');
 const Corporate = require('../models/corporate.model');
+const OfferedService = require('../models/offered.service');
+const RequiredService = require('../models/required.service');
 const express = require('express');
 const { ObjectID } = require('bson');
 const rateLimit = require('express-rate-limit')
 
+
+const router = express.Router();
+
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+function handelError(err,res) {
+    console.log(err);
+    return res.status(500).send('Error');
+}
 
 
 
