@@ -244,9 +244,9 @@ const ServiceUserPage = () => {
                                     
                                     
                                     <Badge borderRadius='full' width='55%' colorScheme='teal'>
-                                       <Text fontSize='80%' letterSpacing='wide' > 
-                                      Last Update
-                                      </Text>
+                                    <Text fontSize='80%' letterSpacing='wide' > 
+                                        Last Update
+                                    </Text>
                                         
                                     </Badge>
                                     
@@ -258,7 +258,6 @@ const ServiceUserPage = () => {
                                         textTransform='uppercase'
                                         ml='2'
                                         p='1%'
-
                                     >
                                         {post.lastUpdate.split('T')[0]}
                                     </Box>
@@ -340,7 +339,6 @@ const ServiceUserPage = () => {
                                 )}
                             </Box>
                         </Box>
-                        
                     </VStack>
                 </div>
             )

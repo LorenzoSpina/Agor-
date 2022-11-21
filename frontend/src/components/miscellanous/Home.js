@@ -54,7 +54,7 @@ const Home = () => {
                 21st century independent jobs
               </Heading>
               <Text fontSize={'xl'} color={'gray.400'}>
-              Thanks to bazar, small workers can offer their services through a network of people all over the world
+              Thanks to Bazar, small workers can offer their services through a network of people all over the world
               </Text>
             </Box>
 
