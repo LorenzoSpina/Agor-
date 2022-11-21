@@ -48,7 +48,7 @@ const ChatPage = () => {
   useEffect(() => {
     
     if (currentUser) {
-      socket.current = io(host)
+      socket.current = io()
       if(socket.current){
         
         socket.current.emit("add-user", currentUser._id)

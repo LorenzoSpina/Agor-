@@ -77,9 +77,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get('/', (req,res) => {
-  res.json('Welcome to Bazar web site!')
-})
 require('./routes/auth')(app)
 app.use(require("./routes/Offered_Services"));
 app.use(require("./routes/Required_Services"));

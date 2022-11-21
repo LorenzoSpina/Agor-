@@ -1,1 +1,31 @@
-{}
+{
+    "name": "pawmproject",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "node ./backend/index.js",
+      "heroku-postbuild": "cd frontend/ && npm install && npm run build"
+    },
+    "author": "4.20",
+    "license": "ISC",
+    "dependencies": {
+      "bcryptjs": "^2.4.3",
+      "compression": "^1.7.4",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.1",
+      "express": "^4.18.1",
+      "express-brute": "^1.0.1",
+      "express-rate-limit": "^6.6.0",
+      "express-session": "^1.17.3",
+      "helmet": "^5.1.0",
+      "http": "^0.0.1-security",
+      "jsonwebtoken": "^8.5.1",
+      "mongodb": "^4.6.0",
+      "mongoose": "^6.6.0",
+      "nodemon": "^2.0.16",
+      "rate-limiter-flexible": "^2.3.7",
+      "socket.io": "^4.5.1"
+    }
+  }
+  

@@ -35,38 +35,32 @@ const ChatContainer = ({currentChat, socket}) => {
   const [pic, setPic] = useState()
   const [isFetching, setIsFetching] = useState(false)
 
-  /*useEffect( () => {
-    async function getMsg(){  
-      const config = {
-        params: {
-          from: user.data.username,
-          to: currentChat,
-        },
-        headers: {
-        "Content-type":"application/json",
-        Authorization: `Bearer ${user.data.token}`
-        },
-      } 
-      const response = await axios.get(recieveMessageRoute, 
-        config
-      );
-      setMessages(response.data);
-    }
-    getMsg()
-  }, [messages])*/
-
   const fetchMsg = async(url) => {
     try {
-      const config = {
-        params: {
-          from: user.data.username,
-          to: currentChat,
-        },
-        headers: {
-        "Content-type":"application/json",
-        Authorization: `Bearer ${user.data.token}`
-        },
-      } 
+      let config = null
+      if(user.data.username){
+        config = {
+          params: {
+            from: user.data.username,
+            to: currentChat,
+          },
+          headers: {
+          "Content-type":"application/json",
+          Authorization: `Bearer ${user.data.token}`
+          },
+        } 
+      }else{
+        config = {
+          params: {
+            from: user.data.name,
+            to: currentChat,
+          },
+          headers: {
+          "Content-type":"application/json",
+          Authorization: `Bearer ${user.data.token}`
+          },
+        }
+      }
       const {data} = await axios.get(url, 
         config
       );
@@ -87,22 +81,39 @@ const ChatContainer = ({currentChat, socket}) => {
 
   const handleSendMsg =  (msg) => {
     if(socket.current){
-      socket.current.emit("send-msg", {
-      from: user.data.username,
-      to: currentChat,
-      msg,
-    });}
+      if(user.data.username){
+        socket.current.emit("send-msg", {
+          from: user.data.username,
+          to: currentChat,
+          msg,
+        });
+      }else{
+        socket.current.emit("send-msg", {
+          from: user.data.name,
+          to: currentChat,
+          msg,
+        });
+      }
+    }
     const config = {
       headers: {
       "Content-type":"application/json",
       "Authorization": `Bearer ${user.data.token}`
       },
     } 
-    axios.post(sendMessageRoute, {
-      from: user.data.username,
-      to: currentChat,
-      message: msg,
-    }, config);
+    if(user.data.username){
+      axios.post(sendMessageRoute, {
+        from: user.data.username,
+        to: currentChat,
+        message: msg,
+      }, config);
+    }else{
+      axios.post(sendMessageRoute, {
+        from: user.data.name,
+        to: currentChat,
+        message: msg,
+      }, config);
+    }
     let msgs = { fromSelf: true, message: msg }
     setMessages(oldMessages => [...oldMessages, msgs])
   }
