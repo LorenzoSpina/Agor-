@@ -24,7 +24,9 @@ Tra le altre features troviamo:
 ## Tecnologie utilizzate
 - [Express js](https://expressjs.com/): web framework usato per lo sviluppo del backend
 - [MongoDB Atlas](https://www.mongodb.com/atlas): database non relazionale cloud-based per mantenere i dati persistenti
+- [Socket.io](https://socket.io/): libreria per la comunicazione tra client e server
 - [React](https://it.reactjs.org/): libreria javascript per lo sviluppo del frontend
+- [Chakra](https://chakra-ui.com/): libreria React per semplificare la creazione di componenti React
 
 ## Prerequisiti
 - [Nodejs](https://nodejs.org/en/)
